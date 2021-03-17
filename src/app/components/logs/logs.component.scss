@@ -1,0 +1,57 @@
+.table {
+  thead {
+    th {
+      color: #fff;
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        code {
+          color: #fff;
+        }
+
+        code.type0 {
+          color: #dddddd;
+        }
+
+
+        .type1 {
+          code.type {
+            color: #52ebca;
+          }
+        }
+
+        code.type2 {
+          color: #5edfff;
+        }
+
+        code.type3 {
+          color: #adaa7d;
+        }
+
+
+
+        code.type4 {
+          color: #ffe550;
+        }
+
+
+        code.type5 {
+          color: #fa5663;
+        }
+
+
+        code.type6 {
+          color: #fa5663;
+        }
+
+
+        code.type7 {
+          color: #41464b;
+        }
+      }
+    }
+  }
+}
