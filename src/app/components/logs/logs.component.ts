@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import * as moment from 'moment';
 import { Log } from 'src/app/models/logs.interface';
 import { LogsService } from 'src/app/services/logs.service';
 import { LogLevels } from 'src/app/utils/enums/log-levels.enum';
@@ -10,7 +11,7 @@ import { LogLevels } from 'src/app/utils/enums/log-levels.enum';
 })
 export class LogsComponent implements OnInit {
   logs: Log[] = [];
-
+  filterSelected: number;
   constructor(private logsService: LogsService) { }
 
   ngOnInit(): void {
@@ -19,13 +20,15 @@ export class LogsComponent implements OnInit {
         this.logs = [];
         logs.forEach((element, i) => {
           const x = element.payload.toJSON();
-          const log = x as Log;
+          const log = (x as Log);
           log.id = i;
+          log.timestamp = moment(`${log.timestamp}`).format('MMMM Do YYYY, h:mm:ss a');
           this.logs.push(log);
         });
         this.logs.reverse();
       }
     );
+    this.logsService.selectedLog.subscribe(data => this.filterSelected = data);
   }
 
   getLevelString(level: LogLevels): string {

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
+import { Subject } from 'rxjs';
 import { LogDTO } from '../models/logs.interface';
 @Injectable({
   providedIn: 'root'
@@ -7,9 +8,11 @@ import { LogDTO } from '../models/logs.interface';
 export class LogsService {
 
   logList: AngularFireList<LogDTO[]>;
-  // selectedLogDTO: Logs;
+  selectedLog = new Subject<number>();
 
-  constructor(private db: AngularFireDatabase) { }
+  constructor(private db: AngularFireDatabase) {
+    this.getLogs();
+  }
 
   getLogs(): AngularFireList<LogDTO[]> {
     return this.db.list('logs');

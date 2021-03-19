@@ -11,13 +11,15 @@ import { AppComponent } from './app.component';
 import { LogsComponent } from './components/logs/logs.component';
 import { environment } from 'src/environments/environment';
 import { NabvarComponent } from './components/nabvar/nabvar.component';
+import { FilterLogPipe } from './pipes/filter-log.pipe';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LogsComponent,
-    NabvarComponent
+    NabvarComponent,
+    FilterLogPipe
   ],
   imports: [
     BrowserModule,
