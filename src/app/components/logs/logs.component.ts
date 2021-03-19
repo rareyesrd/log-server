@@ -14,21 +14,12 @@ export class LogsComponent implements OnInit {
   filterSelected: number;
   constructor(private logsService: LogsService) { }
 
-  ngOnInit(): void {
-    this.logsService.getLogs().snapshotChanges().subscribe(
-      logs => {
-        this.logs = [];
-        logs.forEach((element, i) => {
-          const x = element.payload.toJSON();
-          const log = (x as Log);
-          log.id = i;
-          log.timestamp = moment(`${log.timestamp}`).format('MMMM Do YYYY, h:mm:ss a');
-          this.logs.push(log);
-        });
-        this.logs.reverse();
-      }
-    );
-    this.logsService.selectedLog.subscribe(data => this.filterSelected = data);
+  async ngOnInit(): Promise<void> {
+    setInterval(async () => {
+      this.logs = await this.logsService.getLogs();
+    }, 5000);
+    console.log(this.logs);
+
   }
 
   getLevelString(level: LogLevels): string {

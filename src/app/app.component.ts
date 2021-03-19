@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'log-server-demo';
-  constructor() { }
+  constructor(private logger: NGXLogger) { }
+  sendLog(): void {
+    this.logger.error('Soy un cacaguate, Undefined is not a function');
+  }
 
+  deleteLog(): void {
+
+  }
 }

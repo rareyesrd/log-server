@@ -1,24 +1,31 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Subject } from 'rxjs';
-import { LogDTO } from '../models/logs.interface';
+import { environment } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class LogsService {
-
-  logList: AngularFireList<LogDTO[]>;
   selectedLog = new Subject<number>();
+  constructor(private http: HttpClient) { }
 
-  constructor(private db: AngularFireDatabase) {
-    this.getLogs();
+  getLogs(): any {
+    return new Promise((resolve, reject) => {
+      const params = {
+        q: '*',
+        size: '1000'
+      };
+      this.http.get(`${environment.api}_search`, { params }).toPromise()
+        .then(data => {
+          // tslint:disable-next-line:no-string-literal
+          const logList = data['hits'].hits.map(logs => logs._source);
+          resolve(logList);
+        }).catch(error => reject(error));
+    });
   }
 
-  getLogs(): AngularFireList<LogDTO[]> {
-    return this.db.list('logs');
-  }
+  deleteLog() {
 
-  deleteLog($key: string): void {
-    this.logList.remove($key);
   }
 }

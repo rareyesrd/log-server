@@ -1,17 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-// firebase
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
-
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LogsComponent } from './components/logs/logs.component';
-import { environment } from 'src/environments/environment';
 import { NabvarComponent } from './components/nabvar/nabvar.component';
 import { FilterLogPipe } from './pipes/filter-log.pipe';
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 
 
 @NgModule({
@@ -24,8 +20,12 @@ import { FilterLogPipe } from './pipes/filter-log.pipe';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireDatabaseModule
+    LoggerModule.forRoot({
+      serverLoggingUrl: 'http://localhost:9200/logs/1',
+      level: NgxLoggerLevel.DEBUG,
+      serverLogLevel: NgxLoggerLevel.DEBUG
+    }),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
